@@ -1,17 +1,59 @@
-package cz.cvut.fel.pjv.cv5;
+package cz.cvut.fel.pjv.project;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+    private static final String FILE_PATH = "tasks.json";
+    private static List<Task> tasks = new ArrayList<>();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+    public static void main(String[] args) {
+        loadTasks(); // load tasks on start
+
+        Scanner sc = new Scanner(System.in);
+
+        while(true) {
+            System.out.println("Zadej příkaz (add, list, remove, update, help):  ");
+            String user_input = sc.nextLine();
+            switch(user_input) {
+                case "add":
+                    // TODO
+                    break;
+                case "remove":
+                    // TODO
+                    break;
+                case "list":
+                    // TODO list all, done, not done
+                    break;
+                case "update":
+                    // TODO
+                    break;
+                case "help":
+                    // TODO
+                    break;
+                default:
+                    System.out.println("Unknown command");
+                    break;
+            }
+        }
+    }
+
+    private static void loadTasks() {
+        File file = new File(FILE_PATH);
+        if (file.exists()) {
+            try {
+                tasks = objectMapper.readValue(file, new TypeReference<List<Task>>() {});
+            } catch (IOException e) {
+                System.out.println("Chyba při načítání úkolů: " + e.getMessage());
+            }
         }
     }
 }
