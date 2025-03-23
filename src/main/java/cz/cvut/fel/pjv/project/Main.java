@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static cz.cvut.fel.pjv.project.TaskList.loadTasks;
+
 public class Main {
-    private static final String FILE_PATH = "tasks.json";
-    private static List<Task> tasks = new ArrayList<>();
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static void main(String[] args) {
         loadTasks(); // load tasks on start
 
         Scanner sc = new Scanner(System.in);
 
-        while(true) {
-            System.out.println("Zadej příkaz (add, list, remove, update, help):  ");
+        boolean run = true;
+        while(run) {
+            System.out.println("Zadej příkaz (add, list, remove, update, help, end):  ");
             String user_input = sc.nextLine();
             switch(user_input) {
                 case "add":
@@ -39,21 +39,14 @@ public class Main {
                 case "help":
                     // TODO
                     break;
+                case "end":
+                    run = false;
+                    break;
                 default:
-                    System.out.println("Unknown command");
+                    System.out.println("Unknown command... ");
                     break;
             }
         }
     }
 
-    private static void loadTasks() {
-        File file = new File(FILE_PATH);
-        if (file.exists()) {
-            try {
-                tasks = objectMapper.readValue(file, new TypeReference<List<Task>>() {});
-            } catch (IOException e) {
-                System.out.println("Chyba při načítání úkolů: " + e.getMessage());
-            }
-        }
-    }
 }
