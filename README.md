@@ -1,2 +1,2 @@
 # CLITaskTracker
-First test project
+My first test project in Java - CLI Task Tracker
